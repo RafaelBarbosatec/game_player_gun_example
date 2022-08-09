@@ -1,17 +1,19 @@
-import 'dart:async';
+// ignore_for_file: file_names
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/widgets.dart';
-import 'package:game_player_with_hands/player/kelvin.dart';
 
 import 'kevin_spritesheet.dart';
 
-class KelvinGun extends GameComponent with UseSpriteAnimation {
-  final Kelvin followerTarget;
+class HandGun extends GameComponent with UseSpriteAnimation {
+  late SimplePlayer followerTarget;
   AnimatedObjectOnce? _fastAnimation;
-  KelvinGun(this.followerTarget, Vector2 size) {
+  late Vector2 _vectorRight;
+  late Vector2 _vectorLeft;
+  HandGun(Vector2 size) {
     this.size = size;
-    
+    _vectorRight = Vector2(size.x / 3, 0);
+    _vectorLeft = Vector2(size.x / -3, 0);
   }
 
   @override
@@ -20,19 +22,9 @@ class KelvinGun extends GameComponent with UseSpriteAnimation {
     isFlipHorizontal =
         followerTarget.lastDirectionHorizontal != Direction.right;
 
-    Vector2 aditionalProsition = Vector2(size.x / 3, 0);
-
-    if (isFlipHorizontal) {
-      aditionalProsition = Vector2(size.x / -3, 0);
-    }
-    position = followerTarget.position + aditionalProsition;
+    Vector2 aditionalPosition = isFlipHorizontal ? _vectorLeft : _vectorRight;
+    position = followerTarget.position + aditionalPosition;
     super.update(dt);
-  }
-
-  @override
-  Future<void>? onLoad() async {
-    animation = await KevinSpriteSheet.gunRightIdle;
-    return super.onLoad();
   }
 
   @override
@@ -53,7 +45,7 @@ class KelvinGun extends GameComponent with UseSpriteAnimation {
   }
 
   Future _playOnce(
-    FutureOr<SpriteAnimation> animation, {
+    Future<SpriteAnimation> animation, {
     VoidCallback? onFinish,
   }) async {
     final anim = AnimatedObjectOnce(
@@ -69,5 +61,17 @@ class KelvinGun extends GameComponent with UseSpriteAnimation {
     anim.isFlipHorizontal = isFlipHorizontal;
     await anim.onLoad();
     _fastAnimation = anim;
+  }
+
+  @override
+  Future<void>? onLoad() async {
+    animation = await KevinSpriteSheet.gunRightIdle;
+    return super.onLoad();
+  }
+
+  @override
+  void onMount() {
+    followerTarget = parent as SimplePlayer;
+    super.onMount();
   }
 }

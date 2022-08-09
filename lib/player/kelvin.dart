@@ -1,10 +1,10 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:game_player_with_hands/player/kevin_spritesheet.dart';
 
-import 'kelvin_gun.dart';
+import 'hand_gun.dart';
 
 class Kelvin extends SimplePlayer with ObjectCollision {
-  late KelvinGun gun;
+  late HandGun hand;
   Kelvin({
     required super.position,
   }) : super(
@@ -29,18 +29,18 @@ class Kelvin extends SimplePlayer with ObjectCollision {
   @override
   void joystickAction(JoystickActionEvent event) {
     if (event.id == 1 && event.event == ActionEvent.DOWN) {
-      gun.playShotAnimation();
+      hand.playShotAnimation();
       gameRef.camera.shake(intensity: 1);
     }
     if (event.id == 2 && event.event == ActionEvent.DOWN) {
-      gun.playReloadAnimation();
+      hand.playReloadAnimation();
     }
     super.joystickAction(event);
   }
 
   @override
   void onMount() {
-    add(gun = KelvinGun(this, size));
+    add(hand = HandGun(size));
     super.onMount();
   }
 }
