@@ -60,7 +60,6 @@ class HandGun extends GameComponent with UseSpriteAnimation {
       },
     );
     anim.gameRef = gameRef;
-    anim.isFlipHorizontal = isFlipHorizontal;
     await anim.onLoad();
     _fastAnimation = anim;
   }
