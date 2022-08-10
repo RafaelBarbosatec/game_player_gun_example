@@ -18,12 +18,14 @@ class HandGun extends GameComponent with UseSpriteAnimation {
 
   @override
   void update(double dt) {
-    _fastAnimation?.update(dt);
     isFlipHorizontal =
         followerTarget.lastDirectionHorizontal != Direction.right;
 
     Vector2 aditionalPosition = isFlipHorizontal ? _vectorLeft : _vectorRight;
     position = followerTarget.position + aditionalPosition;
+
+    _fastAnimation?.position = position;
+    _fastAnimation?.update(dt);
     super.update(dt);
   }
 
