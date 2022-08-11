@@ -1,15 +1,14 @@
 // ignore_for_file: file_names
 
 import 'package:bonfire/bonfire.dart';
+import 'package:game_player_with_hands/kevin_spritesheet.dart';
 
-import 'kevin_spritesheet.dart';
+import 'base_hands.dart';
 
-class HandGun extends GameComponent with UseSpriteAnimation {
-  late SimplePlayer followerTarget;
+class HandGun extends BaseHands {
   late Vector2 _vectorRight;
   late Vector2 _vectorLeft;
-  HandGun(Vector2 size) {
-    this.size = size;
+  HandGun(super.size) {
     _vectorRight = Vector2(size.x / 3, 0);
     _vectorLeft = Vector2(size.x / -3, 0);
   }
@@ -19,18 +18,9 @@ class HandGun extends GameComponent with UseSpriteAnimation {
     isFlipHorizontal =
         followerTarget.lastDirectionHorizontal != Direction.right;
 
-    Vector2 aditionalPosition = isFlipHorizontal ? _vectorLeft : _vectorRight;
-    position = followerTarget.position + aditionalPosition;
+    handOffset = isFlipHorizontal ? _vectorLeft : _vectorRight;
 
     super.update(dt);
-  }
-
-  void playShotAnimation() {
-    playSpriteAnimationOnce(KevinSpriteSheet.gunRightShot);
-  }
-
-  void playReloadAnimation() {
-    playSpriteAnimationOnce(KevinSpriteSheet.gunRightReload);
   }
 
   @override
@@ -43,5 +33,16 @@ class HandGun extends GameComponent with UseSpriteAnimation {
   void onMount() {
     followerTarget = parent as SimplePlayer;
     super.onMount();
+  }
+
+  @override
+  void playAction() {
+    playSpriteAnimationOnce(KevinSpriteSheet.gunRightShot);
+    gameRef.camera.shake(intensity: 1);
+  }
+
+  @override
+  void playReload() {
+    playSpriteAnimationOnce(KevinSpriteSheet.gunRightReload);
   }
 }

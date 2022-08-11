@@ -21,6 +21,15 @@ class KevinSpriteSheet {
         ),
       );
 
+  static Future<SpriteAnimation> get hand => SpriteAnimation.load(
+        'hand.png',
+        SpriteAnimationData.sequenced(
+          amount: 4,
+          stepTime: 0.1,
+          textureSize: textureSize,
+        ),
+      );
+
   static Future<SpriteAnimation> get gunRightIdle => SpriteAnimation.load(
         'gun.png',
         SpriteAnimationData.sequenced(

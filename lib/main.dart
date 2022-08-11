@@ -2,6 +2,8 @@ import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:game_player_with_hands/player/kelvin.dart';
 
+import 'decoration/gun.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -44,6 +46,9 @@ class Game extends StatelessWidget {
         'map.tmj',
       ),
       player: Kelvin(position: Vector2(50, 50)),
+      components: [
+        Gun(position:Vector2(200, 200)),
+      ],
       cameraConfig: CameraConfig(zoom: 2),
     );
   }
