@@ -39,6 +39,14 @@ class HandGun extends BaseHands {
   void playAction() {
     playSpriteAnimationOnce(KevinSpriteSheet.gunRightShot);
     gameRef.camera.shake(intensity: 1);
+    simpleAttackRangeByAngle(
+      attackFrom: AttackFromEnum.PLAYER_OR_ALLY,
+      angle: followerTarget.lastDirection.toRadians(),
+      size: Vector2(8, 4),
+      speed: 500,
+      animation: Sprite.load('bullet.png').toAnimation(),
+      damage: 30,
+    );
   }
 
   @override
