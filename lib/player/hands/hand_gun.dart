@@ -16,9 +16,9 @@ class HandGun extends BaseHands {
   @override
   void update(double dt) {
     isFlipHorizontal =
-        followerTarget.lastDirectionHorizontal != Direction.right;
+        (followerTarget as Movement).lastDirectionHorizontal != Direction.right;
 
-    handOffset = isFlipHorizontal ? _vectorLeft : _vectorRight;
+    followerOffset = isFlipHorizontal ? _vectorLeft : _vectorRight;
 
     super.update(dt);
   }
@@ -30,19 +30,14 @@ class HandGun extends BaseHands {
   }
 
   @override
-  void onMount() {
-    followerTarget = parent as SimplePlayer;
-    super.onMount();
-  }
-
-  @override
   void playAction() {
     playSpriteAnimationOnce(KevinSpriteSheet.gunRightShot);
     gameRef.camera.shake(intensity: 1);
     simpleAttackRangeByAngle(
       attackFrom: AttackFromEnum.PLAYER_OR_ALLY,
-      angle: followerTarget.lastDirectionHorizontal.toRadians(),
-      size: Vector2(8, 4),
+      angle: (followerTarget as Movement).lastDirectionHorizontal.toRadians(),
+      size: Vector2(4, 2),
+      centerOffset: Vector2(0, 4),
       marginFromOrigin: -10,
       speed: 500,
       animation: Sprite.load('bullet.png').toAnimation(),
