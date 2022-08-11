@@ -43,6 +43,7 @@ class HandGun extends BaseHands {
       attackFrom: AttackFromEnum.PLAYER_OR_ALLY,
       angle: followerTarget.lastDirection.toRadians(),
       size: Vector2(8, 4),
+      marginFromOrigin: 0,
       speed: 500,
       animation: Sprite.load('bullet.png').toAnimation(),
       damage: 30,
