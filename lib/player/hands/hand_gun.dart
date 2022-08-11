@@ -41,9 +41,9 @@ class HandGun extends BaseHands {
     gameRef.camera.shake(intensity: 1);
     simpleAttackRangeByAngle(
       attackFrom: AttackFromEnum.PLAYER_OR_ALLY,
-      angle: followerTarget.lastDirection.toRadians(),
+      angle: followerTarget.lastDirectionHorizontal.toRadians(),
       size: Vector2(8, 4),
-      marginFromOrigin: 0,
+      marginFromOrigin: -10,
       speed: 500,
       animation: Sprite.load('bullet.png').toAnimation(),
       damage: 30,
