@@ -9,6 +9,7 @@ class Kelvin extends SimplePlayer with ObjectCollision {
     required super.position,
   }) : super(
           size: Vector2.all(32),
+          speed: 80,
           animation: SimpleDirectionAnimation(
             idleRight: KevinSpriteSheet.idleRight,
             runRight: KevinSpriteSheet.runRight,
