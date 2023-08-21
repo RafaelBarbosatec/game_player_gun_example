@@ -7,7 +7,7 @@ class Hands extends BaseHands {
 
   @override
   Future<void>? onLoad() async {
-    animation = await KevinSpriteSheet.hand;
+    setAnimation(await KevinSpriteSheet.hand);
     return super.onLoad();
   }
 

@@ -2,8 +2,7 @@
 
 import 'package:bonfire/bonfire.dart';
 
-abstract class BaseHands extends GameComponent with UseSpriteAnimation,Follower {
-
+abstract class BaseHands extends GameComponent with UseSpriteAnimation {
   BaseHands(Vector2 size) {
     this.size = size;
   }

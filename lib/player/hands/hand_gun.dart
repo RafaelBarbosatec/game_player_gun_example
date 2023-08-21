@@ -6,36 +6,44 @@ import 'package:game_player_with_hands/kevin_spritesheet.dart';
 import 'base_hands.dart';
 
 class HandGun extends BaseHands {
-  late Vector2 _vectorRight;
-  late Vector2 _vectorLeft;
-  HandGun(super.size) {
-    _vectorRight = Vector2(size.x / 3, 0);
-    _vectorLeft = Vector2(size.x / -3, 0);
-  }
+  final double marginFromUser;
+  HandGun(super.size, {this.marginFromUser = 5});
 
   @override
   void update(double dt) {
-    isFlipHorizontal =
-        (followerTarget as Movement).lastDirectionHorizontal != Direction.right;
-
-    followerOffset = isFlipHorizontal ? _vectorLeft : _vectorRight;
+    if (user.lastDirectionHorizontal == Direction.left) {
+      position.y = user.size.y / 2;
+      position.x = marginFromUser;
+      if (!isFlippedHorizontally) {
+        flipHorizontally();
+      }
+    } else {
+      position.y = user.size.y / 2;
+      position.x = user.size.x - marginFromUser;
+      if (isFlippedHorizontally) {
+        flipHorizontally();
+      }
+    }
 
     super.update(dt);
   }
 
   @override
   Future<void>? onLoad() async {
-    animation = await KevinSpriteSheet.gunRightIdle;
+    setAnimation(await KevinSpriteSheet.gunRightIdle);
+    anchor = Anchor.center;
     return super.onLoad();
   }
+
+  Movement get user => (parent as Movement);
 
   @override
   void playAction() {
     playSpriteAnimationOnce(KevinSpriteSheet.gunRightShot);
-    gameRef.camera.shake(intensity: 1);
+    gameRef.bonfireCamera.shake(intensity: 1);
     simpleAttackRangeByAngle(
       attackFrom: AttackFromEnum.PLAYER_OR_ALLY,
-      angle: (followerTarget as Movement).lastDirectionHorizontal.toRadians(),
+      angle: user.lastDirectionHorizontal.toRadians(),
       size: Vector2(4, 2),
       centerOffset: Vector2(0, 4),
       marginFromOrigin: -10,

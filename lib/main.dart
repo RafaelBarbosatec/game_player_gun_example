@@ -29,7 +29,7 @@ class Game extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BonfireTiledWidget(
+    return BonfireWidget(
       joystick: Joystick(directional: JoystickDirectional(), actions: [
         JoystickAction(
           actionId: 1,
@@ -42,12 +42,12 @@ class Game extends StatelessWidget {
           color: Colors.yellow,
         )
       ]),
-      map: TiledWorldMap(
+      map: WorldMapByTiled(
         'map.tmj',
       ),
       player: Kelvin(position: Vector2(50, 50)),
       components: [
-        Gun(position:Vector2(200, 200)),
+        Gun(position: Vector2(200, 200)),
       ],
       cameraConfig: CameraConfig(zoom: 2),
     );

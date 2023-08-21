@@ -3,7 +3,7 @@ import 'package:game_player_with_hands/kevin_spritesheet.dart';
 import 'package:game_player_with_hands/player/hands/base_hands.dart';
 import 'package:game_player_with_hands/player/hands/hands.dart';
 
-class Kelvin extends SimplePlayer with ObjectCollision {
+class Kelvin extends SimplePlayer with BlockMovementCollision {
   BaseHands? hand;
   Kelvin({
     required super.position,
@@ -14,17 +14,17 @@ class Kelvin extends SimplePlayer with ObjectCollision {
             idleRight: KevinSpriteSheet.idleRight,
             runRight: KevinSpriteSheet.runRight,
           ),
-        ) {
-    setupCollision(
-      CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(
-            size: size / 2.5,
-            align: Vector2(size.x / 3, size.y / 2),
-          ),
-        ],
+        );
+
+  @override
+  Future<void> onLoad() {
+    add(
+      RectangleHitbox(
+        size: size / 2.5,
+        position: Vector2(size.x / 3, size.y / 2),
       ),
     );
+    return super.onLoad();
   }
 
   @override
